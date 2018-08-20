@@ -1,0 +1,20 @@
+sudo: required
+
+language: bash
+
+services:
+  - docker
+
+before_script:
+  - docker -v
+  - docker build -t keboola/aws-parameter-filler .
+
+script:
+  - docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e TEST_NAMESPACE -e TEST_REGION keboola/aws-parameter-filler composer ci
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: ./deploy.sh
+  on:
+    tags: true

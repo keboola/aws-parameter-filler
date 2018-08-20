@@ -1,0 +1,78 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Stack for testing Parameter Filler",
+    "Parameters": {
+        "KeboolaStack": {
+            "Type": "String",
+            "Description": "All resources will be tagged by this value."
+        }
+    },
+    "Resources": {
+        "AwsParameterFillerUser": {
+            "Type": "AWS::IAM::User",
+            "DeletionPolicy": "Delete",
+            "Properties": {
+                "Path": "/",
+                "Policies": [
+                    {
+                        "PolicyName": "Owner",
+                        "PolicyDocument": {
+                            "Statement": [
+                                {
+                                    "Sid": "GetSsmParameter",
+                                    "Action": [
+                                        "ssm:GetParameter"
+                                    ],
+                                    "Resource": "arn:aws:ssm:*:*:parameter/*",
+                                    "Effect": "Allow"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "DependsOn": [
+                "TestParameter1"
+            ]
+        },
+        "AccessKey": {
+            "Type": "AWS::IAM::AccessKey",
+            "DeletionPolicy": "Delete",
+            "Properties": {
+                "UserName": {
+                    "Ref": "AwsParameterFillerUser"
+                }
+            },
+            "DependsOn": [
+                "AwsParameterFillerUser"
+            ]
+        },
+        "TestParameter1": {
+            "Type": "AWS::SSM::Parameter",
+            "DeletionPolicy": "Delete",
+            "Properties": {
+                "Name": "/keboola/aws-parameter-filler-test/second",
+                "Description": "Parameter filler test",
+                "Value": "Fantomas was here",
+                "Type": "String"
+            }
+        }
+    },
+    "Outputs": {
+        "Region": {
+            "Value": {
+                "Ref": "AWS::Region"
+            }
+        },
+        "AccessKeyId": {
+            "Value": {
+                "Ref": "AccessKey"
+            }
+        },
+        "AccessKeySecret": {
+            "Value": {
+                "Fn::GetAtt": ["AccessKey", "SecretAccessKey"]
+            }
+        }
+    }
+}

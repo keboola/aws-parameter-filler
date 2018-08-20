@@ -1,0 +1,47 @@
+{
+    "require": {
+        "php": "^7.2",
+        "aws/aws-sdk-php": "^3.64",
+        "keboola/php-component": "^4.1",
+        "symfony/yaml": "^4.1"
+    },
+    "require-dev": {
+        "jakub-onderka/php-parallel-lint": "^1.0",
+        "keboola/coding-standard": "^5.0",
+        "keboola/php-temp": "^1.0",
+        "phpstan/phpstan-shim": "^0.10",
+        "phpunit/phpunit": "^7.0",
+        "symfony/process": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Keboola\\AwsParameterFiller\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Keboola\\AwsParameterFiller\\": "tests/"
+        }
+    },
+    "scripts": {
+        "tests-phpunit": "phpunit",
+        "phpstan": "phpstan analyse ./src ./tests --level=max --no-progress -c phpstan.neon",
+        "phpcs": "phpcs -n --ignore=vendor --extensions=php .",
+        "phpcbf": "phpcbf -n --ignore=vendor --extensions=php .",
+        "phplint": "parallel-lint -j 10 --exclude vendor .",
+        "build": [
+            "@phplint",
+            "@phpcs",
+            "@phpstan",
+            "@tests-phpunit"
+        ],
+        "ci": [
+            "@composer validate --no-check-publish --no-check-all",
+            "@build"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true
+    }
+}
