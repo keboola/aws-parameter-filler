@@ -20,7 +20,7 @@ try {
         throw new UserException(sprintf('Template file "%s" not found.', $argv[1]));
     }
     if (file_exists($argv[2])) {
-        throw new UserException(sprintf('Target file "%s" already exists.', $argv[2]));
+        $logger->info(sprintf('Overwriting target file "%s".', $argv[2]));
     }
     $app->run($argv[1], $argv[2], $argv[3], $argv[4]);
     exit(0);
