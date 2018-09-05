@@ -11,18 +11,12 @@ require __DIR__ . '/../vendor/autoload.php';
 $logger = new Logger();
 try {
     $app = new Component($logger);
-    if (empty($argv[1]) || empty($argv[2]) || empty($argv[3]) || empty($argv[4])) {
+    if (empty($argv[1]) || empty($argv[2]) || empty($argv[3])) {
         throw new UserException(
-            'Not enough arguments provided, call as: run.php templateFile targetFile namespace region'
+            'Not enough arguments provided, call as: run.php fileName namespace region'
         );
     }
-    if (!file_exists($argv[1])) {
-        throw new UserException(sprintf('Template file "%s" not found.', $argv[1]));
-    }
-    if (file_exists($argv[2])) {
-        $logger->info(sprintf('Overwriting target file "%s".', $argv[2]));
-    }
-    $app->run($argv[1], $argv[2], $argv[3], $argv[4]);
+    $app->run($argv[1], $argv[2], $argv[3]);
     exit(0);
 } catch (UserException $e) {
     $logger->error($e->getMessage());

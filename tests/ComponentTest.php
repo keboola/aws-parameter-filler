@@ -8,6 +8,7 @@ use Keboola\Component\UserException;
 use Keboola\Temp\Temp;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
+use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\Yaml\Yaml;
 
 class ComponentTest extends TestCase
@@ -15,8 +16,6 @@ class ComponentTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        var_dump(getenv('AWS_ACCESS_KEY_ID'));
-        var_dump(getenv('AWS_SECRET_ACCESS_KEY'));
         if (empty(getenv('TEST_NAMESPACE')) || empty(getenv('TEST_REGION'))) {
             throw new \Exception('Environment variable TEST_NAMESPACE and TEST_REGION must be set.');
         }
@@ -26,66 +25,56 @@ class ComponentTest extends TestCase
     {
         $temp = new Temp('filler-test');
         $temp->initRunFolder();
-        $data = [
-            'parameters' => [
-                'first' => 'someValue',
-                'second' => null,
-            ],
-        ];
-        $templateFile = $temp->getTmpFolder() . '/parameters.yml';
         $targetFile = $temp->getTmpFolder() . '/' . uniqid('target');
-        file_put_contents($templateFile, Yaml::dump($data));
         $component = new Component(new NullLogger());
-        $component->run($templateFile, $targetFile, (string) getenv('TEST_NAMESPACE'), (string) getenv('TEST_REGION'));
-        $data = Yaml::parse((string) file_get_contents($targetFile));
-        self::assertEquals(
-            [
-                'parameters' => [
-                    'first' => 'someValue',
-                    'second' => 'Fantomas was here',
-                ],
-            ],
-            $data
-        );
+        $component->run($targetFile, (string) getenv('TEST_NAMESPACE'), (string) getenv('TEST_REGION'));
+        $dotEnv = new Dotenv();
+        $dotEnv->load($targetFile);
+        self::assertEquals($_ENV['pin'], 'First shall thou take out the Holy Pin');
+        self::assertEquals($_ENV['then'], 'Then shall thou count to three, no more, no less');
+        self::assertEquals($_ENV['five'], 'Five is right out!');
+        self::assertEquals($_ENV['number'], 'Three shall be number thou shalt count, and the number of the counting shall be three');
+        self::assertEquals($_ENV['numberfive'], 'Five is right out.');
+        self::assertEquals($_ENV['numberfour'], 'Four shalt thou not count.');
+        self::assertEquals($_ENV['numbertwo'],'Neither count thou two, excepting that thou then proceed to three.');
+        self::assertEquals($_ENV['one'], 'One');
+        self::assertEquals($_ENV['two'], 'Two');
+        self::assertEquals($_ENV['three'], 'Five');
+        self::assertEquals($_ENV['threesir'], 'Three, Sir');
+        self::assertEquals($_ENV['SYMFONY_DOTENV_VARS'], 'five,number,numberfive,numberfour,numbertwo,one,pin,then,three,threesir,two');
     }
 
-    public function testInvalidParameter(): void
+    public function testAccessDenied(): void
     {
         $temp = new Temp('filler-test');
         $temp->initRunFolder();
-        $data = [
-            'parameters' => [
-                'first' => 'someValue',
-                'non-existent' => null,
-            ],
-        ];
-        $templateFile = $temp->getTmpFolder() . '/parameters.yml';
         $targetFile = $temp->getTmpFolder() . '/' . uniqid('target');
-        file_put_contents($templateFile, Yaml::dump($data));
         $component = new Component(new NullLogger());
         self::expectException(UserException::class);
-        self::expectExceptionMessage('Parameter "' . getenv('TEST_NAMESPACE') . '/non-existent" was not found.');
-        $component->run($templateFile, $targetFile, (string) getenv('TEST_NAMESPACE'), (string) getenv('TEST_REGION'));
+        self::expectExceptionMessage('Access denied to namespace "/keboola/non-existent/".');
+        $component->run($targetFile, '/keboola/non-existent/', (string) getenv('TEST_REGION'));
     }
 
     public function testInvalidNamespace(): void
     {
         $temp = new Temp('filler-test');
         $temp->initRunFolder();
-        $data = [
-            'parameters' => [
-                'first' => 'someValue',
-                'second' => null,
-            ],
-        ];
-        $templateFile = $temp->getTmpFolder() . '/parameters.yml';
-        $targetFile = $temp->getTmpFolder() . '/' . uniqid('target');
-        file_put_contents($templateFile, Yaml::dump($data));
         $component = new Component(new NullLogger());
         self::expectException(UserException::class);
         self::expectExceptionMessage(
-            'Parameter name "second" or namespace "invalid/string" is invalid: Parameter name: can\'t be prefixed with'
+            'Invalid namespace "invalid/string". Namespace argument must start end and with a slash (/) and be non-empty.'
         );
-        $component->run($templateFile, $targetFile, 'invalid/string', (string) getenv('TEST_REGION'));
+        $targetFile = $temp->getTmpFolder() . '/' . uniqid('target');
+        $component->run($targetFile, 'invalid/string', (string) getenv('TEST_REGION'));
+    }
+
+    public function testInvalidFile(): void
+    {
+        $component = new Component(new NullLogger());
+        self::expectException(UserException::class);
+        self::expectExceptionMessage(
+            'File "php://stdin" is not writable.'
+        );
+        $component->run('php://stdin', 'File "php://stdin" is not writable.', (string) getenv('TEST_REGION'));
     }
 }

@@ -21,9 +21,20 @@
                                 {
                                     "Sid": "GetSsmParameter",
                                     "Action": [
-                                        "ssm:GetParameter"
+                                        "ssm:GetParametersByPath"
                                     ],
-                                    "Resource": "arn:aws:ssm:*:*:parameter/*",
+                                    "Resource": {
+                                        "Fn::Join": [
+                                            "",
+                                            [
+                                                "arn:aws:ssm:*:*:parameter/keboola/",
+                                                {
+                                                    "Ref": "KeboolaStack"
+                                                },
+                                                "/aws-parameter-filler/*",
+                                            ]
+                                        ]
+                                    },
                                     "Effect": "Allow"
                                 }
                             ]
@@ -32,7 +43,17 @@
                 ]
             },
             "DependsOn": [
-                "TestParameter1"
+                "TestParameter1",
+                "TestParameter2",
+                "TestParameter3",
+                "TestParameter4",
+                "TestParameter5",
+                "TestParameter6",
+                "TestParameter7",
+                "TestParameter8",
+                "TestParameter9",
+                "TestParameter10",
+                "TestParameter11"
             ]
         },
         "AccessKey": {
@@ -51,9 +72,241 @@
             "Type": "AWS::SSM::Parameter",
             "DeletionPolicy": "Delete",
             "Properties": {
-                "Name": "/keboola/aws-parameter-filler-test/second",
+                "Name": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "/keboola/",
+                            {
+                                "Ref": "KeboolaStack"
+                            },
+                            "/aws-parameter-filler/",
+                            "one"
+                        ]
+                    ]
+                },
                 "Description": "Parameter filler test",
-                "Value": "Fantomas was here",
+                "Value": "One",
+                "Type": "String"
+            }
+        },
+        "TestParameter2": {
+            "Type": "AWS::SSM::Parameter",
+            "DeletionPolicy": "Delete",
+            "Properties": {
+                "Name": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "/keboola/",
+                            {
+                                "Ref": "KeboolaStack"
+                            },
+                            "/aws-parameter-filler/",
+                            "two"
+                        ]
+                    ]
+                },
+                "Description": "Parameter filler test",
+                "Value": "Two",
+                "Type": "String"
+            }
+        },
+        "TestParameter3": {
+            "Type": "AWS::SSM::Parameter",
+            "DeletionPolicy": "Delete",
+            "Properties": {
+                "Name": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "/keboola/",
+                            {
+                                "Ref": "KeboolaStack"
+                            },
+                            "/aws-parameter-filler/",
+                            "three"
+                        ]
+                    ]
+                },
+                "Description": "Parameter filler test",
+                "Value": "Five",
+                "Type": "String"
+            }
+        },
+        "TestParameter4": {
+            "Type": "AWS::SSM::Parameter",
+            "DeletionPolicy": "Delete",
+            "Properties": {
+                "Name": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "/keboola/",
+                            {
+                                "Ref": "KeboolaStack"
+                            },
+                            "/aws-parameter-filler/",
+                            "threesir"
+                        ]
+                    ]
+                },
+                "Description": "Parameter filler test",
+                "Value": "Three, Sir",
+                "Type": "String"
+            }
+        },
+        "TestParameter5": {
+            "Type": "AWS::SSM::Parameter",
+            "DeletionPolicy": "Delete",
+            "Properties": {
+                "Name": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "/keboola/",
+                            {
+                                "Ref": "KeboolaStack"
+                            },
+                            "/aws-parameter-filler/",
+                            "five"
+                        ]
+                    ]
+                },
+                "Description": "Parameter filler test",
+                "Value": "Five is right out!",
+                "Type": "String"
+            }
+        },
+        "TestParameter6": {
+            "Type": "AWS::SSM::Parameter",
+            "DeletionPolicy": "Delete",
+            "Properties": {
+                "Name": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "/keboola/",
+                            {
+                                "Ref": "KeboolaStack"
+                            },
+                            "/aws-parameter-filler/",
+                            "pin"
+                        ]
+                    ]
+                },
+                "Description": "Parameter filler test",
+                "Value": "First shall thou take out the Holy Pin",
+                "Type": "String"
+            }
+        },
+        "TestParameter7": {
+            "Type": "AWS::SSM::Parameter",
+            "DeletionPolicy": "Delete",
+            "Properties": {
+                "Name": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "/keboola/",
+                            {
+                                "Ref": "KeboolaStack"
+                            },
+                            "/aws-parameter-filler/",
+                            "then"
+                        ]
+                    ]
+                },
+                "Description": "Parameter filler test",
+                "Value": "Then shall thou count to three, no more, no less",
+                "Type": "String"
+            }
+        },
+        "TestParameter8": {
+            "Type": "AWS::SSM::Parameter",
+            "DeletionPolicy": "Delete",
+            "Properties": {
+                "Name": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "/keboola/",
+                            {
+                                "Ref": "KeboolaStack"
+                            },
+                            "/aws-parameter-filler/",
+                            "number"
+                        ]
+                    ]
+                },
+                "Description": "Parameter filler test",
+                "Value": "Three shall be number thou shalt count, and the number of the counting shall be three",
+                "Type": "String"
+            }
+        },
+        "TestParameter9": {
+            "Type": "AWS::SSM::Parameter",
+            "DeletionPolicy": "Delete",
+            "Properties": {
+                "Name": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "/keboola/",
+                            {
+                                "Ref": "KeboolaStack"
+                            },
+                            "/aws-parameter-filler/",
+                            "numberfour"
+                        ]
+                    ]
+                },
+                "Description": "Parameter filler test",
+                "Value": "Four shalt thou not count.",
+                "Type": "String"
+            }
+        },
+        "TestParameter10": {
+            "Type": "AWS::SSM::Parameter",
+            "DeletionPolicy": "Delete",
+            "Properties": {
+                "Name": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "/keboola/",
+                            {
+                                "Ref": "KeboolaStack"
+                            },
+                            "/aws-parameter-filler/",
+                            "numbertwo"
+                        ]
+                    ]
+                },
+                "Description": "Parameter filler test",
+                "Value": "Neither count thou two, excepting that thou then proceed to three.",
+                "Type": "String"
+            }
+        },
+        "TestParameter11": {
+            "Type": "AWS::SSM::Parameter",
+            "DeletionPolicy": "Delete",
+            "Properties": {
+                "Name": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "/keboola/",
+                            {
+                                "Ref": "KeboolaStack"
+                            },
+                            "/aws-parameter-filler/",
+                            "numberfive"
+                        ]
+                    ]
+                },
+                "Description": "Parameter filler test",
+                "Value": "Five is right out.",
                 "Type": "String"
             }
         }

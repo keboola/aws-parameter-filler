@@ -1,9 +1,12 @@
 {
+    "name": "aws-parameter-filler",
+    "description": "Fills parameters from AWS SSM into an .env file",
+    "type": "library",
     "require": {
         "php": "^7.2",
         "aws/aws-sdk-php": "^3.64",
         "keboola/php-component": "^4.1",
-        "symfony/yaml": "^4.1"
+        "symfony/dotenv": "^4.1"
     },
     "require-dev": {
         "jakub-onderka/php-parallel-lint": "^1.0",
@@ -23,6 +26,7 @@
             "Keboola\\AwsParameterFiller\\": "tests/"
         }
     },
+    "bin": ["src/run.php"],
     "scripts": {
         "tests-phpunit": "phpunit",
         "phpstan": "phpstan analyse ./src ./tests --level=max --no-progress -c phpstan.neon",
