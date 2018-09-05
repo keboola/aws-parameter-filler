@@ -26,7 +26,7 @@
             "Keboola\\AwsParameterFiller\\": "tests/"
         }
     },
-    "bin": ["src/run.php"],
+    "bin": ["aws-parameter-filler"],
     "scripts": {
         "tests-phpunit": "phpunit",
         "phpstan": "phpstan analyse ./src ./tests --level=max --no-progress -c phpstan.neon",
