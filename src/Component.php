@@ -56,6 +56,7 @@ class Component
     {
         $result = sprintf('# Added by aws-parameter-filler from namespace: "%s".', $namespace);
         foreach ($data as $key => $value) {
+            $this->logger->info(sprintf('Got parameter "%s".', $key));
             $result .= sprintf("\n%s='%s'", $key, $value);
         }
         return $result . "\n";

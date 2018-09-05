@@ -21,7 +21,8 @@
                                 {
                                     "Sid": "GetSsmParameter",
                                     "Action": [
-                                        "ssm:GetParametersByPath"
+                                        "ssm:GetParametersByPath",
+                                        "ssm:GetParameter"
                                     ],
                                     "Resource": {
                                         "Fn::Join": [
