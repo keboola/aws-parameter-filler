@@ -2,6 +2,7 @@
     "name": "keboola/aws-parameter-filler",
     "description": "Fills parameters from AWS SSM into an .env file",
     "type": "library",
+    "license": "MIT",    
     "require": {
         "php": "^7.2",
         "aws/aws-sdk-php": "^3.64",
