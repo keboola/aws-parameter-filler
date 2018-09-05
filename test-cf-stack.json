@@ -31,7 +31,7 @@
                                                 {
                                                     "Ref": "KeboolaStack"
                                                 },
-                                                "/aws-parameter-filler/*",
+                                                "/aws-parameter-filler/*"
                                             ]
                                         ]
                                     },
