@@ -54,7 +54,7 @@ class Component
 
     private function format(array $data, string $namespace): string
     {
-        $result = sprintf('# Added by aws-parameter-filler from namespace: "%s".', $namespace);
+        $result = sprintf("\n" . '# Added by aws-parameter-filler from namespace: "%s".', $namespace);
         foreach ($data as $key => $value) {
             $this->logger->info(sprintf('Got parameter "%s".', $key));
             $result .= sprintf("\n%s='%s'", $key, $value);
