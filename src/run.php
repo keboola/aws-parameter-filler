@@ -6,8 +6,6 @@ use Keboola\AwsParameterFiller\Component;
 use Keboola\Component\UserException;
 use Keboola\Component\Logger;
 
-require __DIR__ . '/../vendor/autoload.php';
-
 $logger = new Logger();
 try {
     $app = new Component($logger);
