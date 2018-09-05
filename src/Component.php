@@ -36,9 +36,14 @@ class Component
     public function run(string $filePath, string $namespace, string $region): void
     {
         $this->namespace = $namespace;
-        if (empty($namespace) || strlen($namespace) < 3 || $namespace[0] !== '/' || $namespace[strlen($namespace)-1] !== '/') {
+        if (empty($namespace) || strlen($namespace) < 3 ||
+            $namespace[0] !== '/' || $namespace[strlen($namespace)-1] !== '/'
+        ) {
             throw new UserException(
-                sprintf('Invalid namespace "%s". Namespace argument must start end and with a slash (/) and be non-empty.', $namespace)
+                sprintf(
+                    'Invalid namespace "%s". Namespace argument must start end and with a slash (/) and be non-empty.',
+                    $namespace
+                )
             );
         }
         if (!file_exists($filePath)) {

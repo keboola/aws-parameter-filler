@@ -33,15 +33,21 @@ class ComponentTest extends TestCase
         self::assertEquals($_ENV['pin'], 'First shall thou take out the Holy Pin');
         self::assertEquals($_ENV['then'], 'Then shall thou count to three, no more, no less');
         self::assertEquals($_ENV['five'], 'Five is right out!');
-        self::assertEquals($_ENV['number'], 'Three shall be number thou shalt count, and the number of the counting shall be three');
+        self::assertEquals(
+            $_ENV['number'],
+            'Three shall be number thou shalt count, and the number of the counting shall be three'
+        );
         self::assertEquals($_ENV['numberfive'], 'Five is right out.');
         self::assertEquals($_ENV['numberfour'], 'Four shalt thou not count.');
-        self::assertEquals($_ENV['numbertwo'],'Neither count thou two, excepting that thou then proceed to three.');
+        self::assertEquals($_ENV['numbertwo'], 'Neither count thou two, excepting that thou then proceed to three.');
         self::assertEquals($_ENV['one'], 'One');
         self::assertEquals($_ENV['two'], 'Two');
         self::assertEquals($_ENV['three'], 'Five');
         self::assertEquals($_ENV['threesir'], 'Three, Sir');
-        self::assertEquals($_ENV['SYMFONY_DOTENV_VARS'], 'five,number,numberfive,numberfour,numbertwo,one,pin,then,three,threesir,two');
+        self::assertEquals(
+            $_ENV['SYMFONY_DOTENV_VARS'],
+            'five,number,numberfive,numberfour,numbertwo,one,pin,then,three,threesir,two'
+        );
     }
 
     public function testRunAppend(): void
@@ -57,17 +63,23 @@ class ComponentTest extends TestCase
         self::assertEquals($_ENV['pin'], 'First shall thou take out the Holy Pin');
         self::assertEquals($_ENV['then'], 'Then shall thou count to three, no more, no less');
         self::assertEquals($_ENV['five'], 'Five is right out!');
-        self::assertEquals($_ENV['number'], 'Three shall be number thou shalt count, and the number of the counting shall be three');
+        self::assertEquals(
+            $_ENV['number'],
+            'Three shall be number thou shalt count, and the number of the counting shall be three'
+        );
         self::assertEquals($_ENV['numberfive'], 'Five is right out.');
         self::assertEquals($_ENV['numberfour'], 'Four shalt thou not count.');
-        self::assertEquals($_ENV['numbertwo'],'Neither count thou two, excepting that thou then proceed to three.');
+        self::assertEquals($_ENV['numbertwo'], 'Neither count thou two, excepting that thou then proceed to three.');
         self::assertEquals($_ENV['one'], 'One');
         self::assertEquals($_ENV['two'], 'Two');
         self::assertEquals($_ENV['three'], 'Five');
         self::assertEquals($_ENV['threesir'], 'Three, Sir');
         self::assertEquals($_ENV['a'], 'b');
         self::assertEquals($_ENV['c'], 'd');
-        self::assertEquals($_ENV['SYMFONY_DOTENV_VARS'], 'a,c,five,number,numberfive,numberfour,numbertwo,one,pin,then,three,threesir,two');
+        self::assertEquals(
+            $_ENV['SYMFONY_DOTENV_VARS'],
+            'a,c,five,number,numberfive,numberfour,numbertwo,one,pin,then,three,threesir,two'
+        );
     }
 
     public function testAccessDenied(): void
@@ -88,7 +100,7 @@ class ComponentTest extends TestCase
         $component = new Component(new NullLogger());
         self::expectException(UserException::class);
         self::expectExceptionMessage(
-            'Invalid namespace "invalid/string". Namespace argument must start end and with a slash (/) and be non-empty.'
+            'Invalid namespace "invalid/string". Namespace argument must start end and with a slash'
         );
         $targetFile = $temp->getTmpFolder() . '/' . uniqid('target');
         $component->run($targetFile, 'invalid/string', (string) getenv('TEST_REGION'));
