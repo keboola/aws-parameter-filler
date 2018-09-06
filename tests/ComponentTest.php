@@ -37,16 +37,18 @@ class ComponentTest extends TestCase
             $_ENV['number'],
             'Three shall be number thou shalt count, and the number of the counting shall be three'
         );
-        self::assertEquals($_ENV['numberfive'], 'Five is right out.');
-        self::assertEquals($_ENV['numberfour'], 'Four shalt thou not count.');
-        self::assertEquals($_ENV['numbertwo'], 'Neither count thou two, excepting that thou then proceed to three.');
-        self::assertEquals($_ENV['one'], 'One');
-        self::assertEquals($_ENV['two'], 'Two');
-        self::assertEquals($_ENV['three'], 'Five');
-        self::assertEquals($_ENV['threesir'], 'Three, Sir');
+        self::assertEquals('Five is right out.', $_ENV['numberfive']);
+        self::assertEquals('Four shalt thou not count.', $_ENV['numberfour']);
+        self::assertEquals('Neither count thou two, excepting that thou then proceed to three.', $_ENV['numbertwo']);
+        self::assertEquals('One', $_ENV['one']);
+        self::assertEquals('Two', $_ENV['two']);
+        self::assertEquals('Five', $_ENV['three']);
+        self::assertEquals('Three, Sir', $_ENV['threesir']);
+        $vars = explode(',', $_ENV['SYMFONY_DOTENV_VARS']);
+        sort($vars);
         self::assertEquals(
-            $_ENV['SYMFONY_DOTENV_VARS'],
-            'five,number,numberfive,numberfour,numbertwo,one,pin,then,three,threesir,two'
+            ['five', 'number', 'numberfive', 'numberfour', 'numbertwo', 'one', 'pin', 'then', 'three', 'threesir', 'two'],
+            $vars
         );
     }
 
@@ -67,18 +69,20 @@ class ComponentTest extends TestCase
             $_ENV['number'],
             'Three shall be number thou shalt count, and the number of the counting shall be three'
         );
-        self::assertEquals($_ENV['numberfive'], 'Five is right out.');
-        self::assertEquals($_ENV['numberfour'], 'Four shalt thou not count.');
-        self::assertEquals($_ENV['numbertwo'], 'Neither count thou two, excepting that thou then proceed to three.');
-        self::assertEquals($_ENV['one'], 'One');
-        self::assertEquals($_ENV['two'], 'Two');
-        self::assertEquals($_ENV['three'], 'Five');
-        self::assertEquals($_ENV['threesir'], 'Three, Sir');
-        self::assertEquals($_ENV['a'], 'b');
-        self::assertEquals($_ENV['c'], 'd');
+        self::assertEquals('Five is right out.', $_ENV['numberfive']);
+        self::assertEquals('Four shalt thou not count.', $_ENV['numberfour']);
+        self::assertEquals('Neither count thou two, excepting that thou then proceed to three.', $_ENV['numbertwo']);
+        self::assertEquals('One', $_ENV['one']);
+        self::assertEquals('Two', $_ENV['two']);
+        self::assertEquals('Five', $_ENV['three']);
+        self::assertEquals('Three, Sir', $_ENV['threesir']);
+        self::assertEquals('b', $_ENV['a']);
+        self::assertEquals('d', $_ENV['c']);
+        $vars = explode(',', $_ENV['SYMFONY_DOTENV_VARS']);
+        sort($vars);
         self::assertEquals(
-            $_ENV['SYMFONY_DOTENV_VARS'],
-            'a,c,five,number,numberfive,numberfour,numbertwo,one,pin,then,three,threesir,two'
+            ['a', 'c', 'five', 'number', 'numberfive', 'numberfour', 'numbertwo', 'one', 'pin', 'then', 'three', 'threesir', 'two'],
+            $vars
         );
     }
 
