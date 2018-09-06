@@ -62,6 +62,7 @@ class Component
         $result = sprintf("\n" . '# Added by aws-parameter-filler from namespace: "%s".', $namespace);
         foreach ($data as $key => $value) {
             $this->logger->info(sprintf('Got parameter "%s".', $key));
+            // quote values with no var expansion https://github.com/bkeepers/dotenv/issues/267
             $result .= sprintf("\n%s='%s'", $key, $value);
         }
         return $result . "\n";
