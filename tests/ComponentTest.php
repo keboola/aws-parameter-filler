@@ -47,7 +47,8 @@ class ComponentTest extends TestCase
         $vars = explode(',', $_ENV['SYMFONY_DOTENV_VARS']);
         sort($vars);
         self::assertEquals(
-            ['five', 'number', 'numberfive', 'numberfour', 'numbertwo', 'one', 'pin', 'then', 'three', 'threesir', 'two'],
+            ['five', 'number', 'numberfive', 'numberfour',
+                'numbertwo', 'one', 'pin', 'then', 'three', 'threesir', 'two'],
             $vars
         );
     }
@@ -81,7 +82,8 @@ class ComponentTest extends TestCase
         $vars = explode(',', $_ENV['SYMFONY_DOTENV_VARS']);
         sort($vars);
         self::assertEquals(
-            ['a', 'c', 'five', 'number', 'numberfive', 'numberfour', 'numbertwo', 'one', 'pin', 'then', 'three', 'threesir', 'two'],
+            ['a', 'c', 'five', 'number', 'numberfive', 'numberfour',
+                'numbertwo', 'one', 'pin', 'then', 'three', 'threesir', 'two'],
             $vars
         );
     }
