@@ -57,18 +57,6 @@
                 "TestParameter11"
             ]
         },
-        "AccessKey": {
-            "Type": "AWS::IAM::AccessKey",
-            "DeletionPolicy": "Delete",
-            "Properties": {
-                "UserName": {
-                    "Ref": "AwsParameterFillerUser"
-                }
-            },
-            "DependsOn": [
-                "AwsParameterFillerUser"
-            ]
-        },
         "TestParameter1": {
             "Type": "AWS::SSM::Parameter",
             "DeletionPolicy": "Delete",
@@ -318,14 +306,18 @@
                 "Ref": "AWS::Region"
             }
         },
-        "AccessKeyId": {
+        "Namespace": {
             "Value": {
-                "Ref": "AccessKey"
-            }
-        },
-        "AccessKeySecret": {
-            "Value": {
-                "Fn::GetAtt": ["AccessKey", "SecretAccessKey"]
+                "Fn::Join": [
+                    "",
+                    [
+                        "/keboola/",
+                        {
+                            "Ref": "KeboolaStack"
+                        },
+                        "/aws-parameter-filler/"
+                    ]
+                ]
             }
         }
     }
