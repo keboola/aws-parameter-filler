@@ -76,6 +76,7 @@ class Component
             $result = $client->getParametersByPath([
                 'Path' => $namespace,
                 'Recursive' => false,
+                'WithDecryption' => true,
             ]);
             $parameters = $result->get('Parameters');
             $nextToken = $result->get('NextToken');
@@ -84,6 +85,7 @@ class Component
                     'Path' => $namespace,
                     'Recursive' => false,
                     'NextToken' => $nextToken,
+                    'WithDecryption' => true,
                 ]);
                 $nextToken = $result->get('NextToken');
                 $parameters = array_merge($parameters, $result->get('Parameters'));

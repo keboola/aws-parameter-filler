@@ -32,7 +32,15 @@ cd aws-parameter-filler
 docker-compose build
 ```
 
-Use `test-cf-stack.json` to create a testing stack. Create an access key for the generated user. 
+Use `test-cf-stack.json` to create a testing stack. Create an access key for the generated user. Also [manually create](https://console.aws.amazon.com/systems-manager/parameters/create) SecureString parameter, which cannot be created with cloudformation template: 
+
+```
+Name: /keboola/$STACKNAME/aws-parameter-filler/six
+Value: SuperSecretValue
+Type: SecureString
+Description: Parameter filler test - Encrypted parameter
+```
+
 Set the following environment variables (or use `.env.template`):
 
 - `AWS_ACCESS_KEY_ID` - From the created access key.

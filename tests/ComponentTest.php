@@ -44,11 +44,12 @@ class ComponentTest extends TestCase
         self::assertEquals('Two', $_ENV['two']);
         self::assertEquals('Five', $_ENV['three']);
         self::assertEquals('Three, Sir', $_ENV['threesir']);
+        self::assertEquals('SuperSecretValue', $_ENV['six']);
         $vars = explode(',', $_ENV['SYMFONY_DOTENV_VARS']);
         sort($vars);
         self::assertEquals(
             ['five', 'number', 'numberfive', 'numberfour',
-                'numbertwo', 'one', 'pin', 'then', 'three', 'threesir', 'two'],
+                'numbertwo', 'one', 'pin', 'six', 'then', 'three', 'threesir', 'two'],
             $vars
         );
     }
@@ -77,13 +78,14 @@ class ComponentTest extends TestCase
         self::assertEquals('Two', $_ENV['two']);
         self::assertEquals('Five', $_ENV['three']);
         self::assertEquals('Three, Sir', $_ENV['threesir']);
+        self::assertEquals('SuperSecretValue', $_ENV['six']);
         self::assertEquals('b', $_ENV['a']);
         self::assertEquals('d', $_ENV['c']);
         $vars = explode(',', $_ENV['SYMFONY_DOTENV_VARS']);
         sort($vars);
         self::assertEquals(
             ['a', 'c', 'five', 'number', 'numberfive', 'numberfour',
-                'numbertwo', 'one', 'pin', 'then', 'three', 'threesir', 'two'],
+                'numbertwo', 'one', 'pin', 'six', 'then', 'three', 'threesir', 'two'],
             $vars
         );
     }
