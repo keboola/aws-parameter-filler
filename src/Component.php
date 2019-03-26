@@ -21,11 +21,6 @@ class Component
     /**
      * @var string
      */
-    private $namespace;
-
-    /**
-     * @var string
-     */
     private $region;
 
     public function __construct(LoggerInterface $logger)
@@ -35,7 +30,6 @@ class Component
 
     public function run(string $filePath, string $namespace, string $region): void
     {
-        $this->namespace = $namespace;
         if (empty($namespace) || strlen($namespace) < 3 ||
             $namespace[0] !== '/' || $namespace[strlen($namespace)-1] !== '/'
         ) {
