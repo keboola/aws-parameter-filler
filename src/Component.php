@@ -112,33 +112,4 @@ class Component
         }
         return $data;
     }
-
-    public function getParameterValue(string $key): string
-    {
-        $client = new SsmClient(['region' => $this->region, 'version' => '2014-11-06']);
-        $name = $this->namespace . '/' . $key;
-        try {
-            $this->logger->info(sprintf('Getting parameter "%s" from SSM.', $name));
-            $result = $client->getParameter([
-                'Name' => $name,
-                'WithDecryption' => true,
-            ]);
-            return (string) $result->get('Parameter')['Value'];
-        } catch (SsmException $e) {
-            if ($e->getAwsErrorCode() === 'ParameterNotFound') {
-                throw new UserException(sprintf('Parameter "%s" was not found.', $name));
-            }
-            if ($e->getAwsErrorCode() === 'ValidationException') {
-                throw new UserException(
-                    sprintf(
-                        'Parameter name "%s" or namespace "%s" is invalid: %s',
-                        $key,
-                        $this->namespace,
-                        $e->getAwsErrorMessage()
-                    )
-                );
-            }
-            throw $e;
-        }
-    }
 }
