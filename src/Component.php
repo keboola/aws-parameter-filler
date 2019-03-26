@@ -21,11 +21,6 @@ class Component
     /**
      * @var string
      */
-    private $namespace;
-
-    /**
-     * @var string
-     */
     private $region;
 
     public function __construct(LoggerInterface $logger)
@@ -35,7 +30,6 @@ class Component
 
     public function run(string $filePath, string $namespace, string $region): void
     {
-        $this->namespace = $namespace;
         if (empty($namespace) || strlen($namespace) < 3 ||
             $namespace[0] !== '/' || $namespace[strlen($namespace)-1] !== '/'
         ) {
@@ -111,34 +105,5 @@ class Component
             $data[$this->getParamName($namespace, $row['Name'])] = $row['Value'];
         }
         return $data;
-    }
-
-    public function getParameterValue(string $key): string
-    {
-        $client = new SsmClient(['region' => $this->region, 'version' => '2014-11-06']);
-        $name = $this->namespace . '/' . $key;
-        try {
-            $this->logger->info(sprintf('Getting parameter "%s" from SSM.', $name));
-            $result = $client->getParameter([
-                'Name' => $name,
-                'WithDecryption' => true,
-            ]);
-            return (string) $result->get('Parameter')['Value'];
-        } catch (SsmException $e) {
-            if ($e->getAwsErrorCode() === 'ParameterNotFound') {
-                throw new UserException(sprintf('Parameter "%s" was not found.', $name));
-            }
-            if ($e->getAwsErrorCode() === 'ValidationException') {
-                throw new UserException(
-                    sprintf(
-                        'Parameter name "%s" or namespace "%s" is invalid: %s',
-                        $key,
-                        $this->namespace,
-                        $e->getAwsErrorMessage()
-                    )
-                );
-            }
-            throw $e;
-        }
     }
 }
