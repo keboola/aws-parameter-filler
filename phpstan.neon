@@ -1,4 +1,4 @@
 parameters:
     ignoreErrors:
-    	- '~Parameter #1 \$object of function get_class expects object, Throwable\|null given.~'
-	checkMissingIterableValueType: false
+        - '~Parameter #1 \$object of function get_class expects object, Throwable\|null given.~'
+    checkMissingIterableValueType: false
