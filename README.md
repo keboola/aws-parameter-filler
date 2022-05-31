@@ -77,3 +77,7 @@ in `.env` file of the application root. Environment variables may also be used:
 	"get-parameters": "aws-parameter-filler .env /keboola/$KEBOOLA_STACK/runner-sync-api/ $KEBOOLA_STACK_REGION"
 }
 ```
+
+## License
+
+MIT licensed, see [LICENSE](./LICENSE) file.
